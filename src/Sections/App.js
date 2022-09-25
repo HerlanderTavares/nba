@@ -1,43 +1,64 @@
 import './App.scss';
-import {playersAPI, teamsAPI} from '../API/API';
+import {teamAPI, teamInfoAPI} from '../API/TeamsAPI';
+import {playerAPI} from '../API/PlayersAPI';
+import {coachesAPI} from '../API/CoachesAPI';
 import {useState, useEffect} from 'react';
 import State from '../API/State';
 
-import Home from './01-Home/Home.';
+import Home from './01-Home/Home';
 import Teams from './02-Teams/Teams';
 import Players from './03-Players/Players';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [infoIsLoading, setInfoIsLoading] = useState(true);
   const [teams, setTeams] = useState([]);
   const [players, setPlayers] = useState([]);
+  const [coaches, setCoaches] = useState([]);
   const [error, setError] = useState({failedLoad: false, message: ''});
+  const [isLoading, setIsLoading] = useState({
+    teams: true,
+    players: true,
+    coaches: true,
+    teamsInfo: true,
+    playerInfo: true,
+  });
+
+  const state = {
+    isLoading,
+    setIsLoading,
+    teams,
+    setTeams,
+    players,
+    setPlayers,
+    error,
+    setError,
+  };
 
   useEffect(() => {
-    teamsAPI(setError).then(data => {
-      setTeams(data);
-      setIsLoading(false);
-      console.log('Finished loading teams');
+    teamAPI(state)
+      .then(data => {
+        setTeams(data);
+        setIsLoading(prevState => ({...prevState, teams: false}));
+        return data;
+      })
+      .then(teams => teamInfoAPI(state, teams))
+      .then(setIsLoading(prevState => ({...prevState, teamsInfo: false})));
+
+    playerAPI(state).then(data => {
+      setPlayers(data);
+      setIsLoading(prevState => ({...prevState, players: false}));
     });
 
-    playersAPI(setError).then(data => {
-      setPlayers(data);
-      setInfoIsLoading(false);
-      console.log('Finished loading players');
+    coachesAPI(state).then(data => {
+      setCoaches(data);
+      setIsLoading(prevState => ({...prevState, coaches: false}));
     });
   }, []);
 
-  const state = {
-    isLoading: isLoading,
-    setIsLoading: setIsLoading,
-    infoIsLoading: infoIsLoading,
-    setInfoIsLoading: setInfoIsLoading,
-    teams: teams,
-    setTeams: setTeams,
-    players: players,
-    setPlayers: setPlayers,
-  };
+  if (!isLoading.teamsInfo) console.log(teams);
 
-  return <State.Provider value={state}></State.Provider>;
+  return (
+    <State.Provider value={state}>
+      <h1>Hello world</h1>
+    </State.Provider>
+  );
 }
