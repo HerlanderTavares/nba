@@ -1,7 +1,5 @@
 @import './helper.scss';
 
-@import './helper.scss';
-
 :root {
   --vh: 1vh;
 }
@@ -24,6 +22,7 @@ body {
   font-weight: weight(regular);
   font-size: 2rem;
   overflow-x: hidden;
+  min-width: 30rem;
 }
 
 li {
@@ -53,4 +52,16 @@ button {
 #root {
   width: 100%;
   height: 100%;
+}
+
+.footer {
+  margin-top: 20rem;
+  width: 100%;
+  background-color: color(main);
+  height: 15rem;
+
+  @include flex-center;
+  color: white;
+  font-family: font(heading);
+  font-size: 2rem;
 }

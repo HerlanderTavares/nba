@@ -42,7 +42,7 @@ $header-pad: 12% 2rem 5%;
       @content;
     }
   } @else if $size == ratio {
-    @media (#{$max_min}-aspect-ratio: $wid_hei) {
+    @media (max-aspect-ratio: ($wid_hei / $max_min)) {
       @content;
     }
   } @else if $size == landscape {
@@ -105,12 +105,12 @@ $header-pad: 12% 2rem 5%;
   width: 90%;
   height: 100%;
   max-width: 120rem;
+  margin: 0 auto;
 }
 
 %section {
   width: 100%;
   height: 100%;
-  @include flex-center;
 }
 
 %subtitle {

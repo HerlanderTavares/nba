@@ -1,0 +1,41 @@
+@import '../../../helper.scss';
+
+.header {
+  width: 100%;
+  height: 100%;
+  background-color: color(main);
+
+  &__container {
+    @extend %container;
+    @include flex(space-between, center);
+  }
+
+  &__logo {
+    height: 60%;
+  }
+
+  &__nav {
+    @include flex;
+    gap: 5rem;
+
+    @include query(portrait) {
+      gap: clamp(1rem, 5vw, 5rem);
+    }
+  }
+
+  &__link {
+    color: white;
+    font-weight: weight(bold);
+    font-family: font(heading);
+    text-transform: uppercase;
+    font-size: 1.8rem;
+
+    @include query(portrait) {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+
+    &:active {
+      scale: 0.85;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@import '../../../helper.scss';
+
+.main {
+  @extend %section;
+
+  &__container {
+    @extend %container;
+  }
+
+  &__subtitle {
+    @extend %subtitle;
+    margin-bottom: 5rem;
+    text-align: center;
+    margin-top: 20rem;
+  }
+}

@@ -1,0 +1,19 @@
+@import '../helper.scss';
+
+.home {
+  width: 100%;
+  height: 100%;
+
+  &__hero {
+    width: 100%;
+    height: calc(var(--vh, 1vh) * 100);
+    display: grid;
+    grid-template-rows: 8rem 1fr;
+  }
+
+  &__loading {
+    background-color: #ecf9ff;
+    box-shadow: inset 1.8rem 1.8rem 14rem rgba(black, 0.35),
+      inset -1.8rem -1.8rem 14rem rgba(black, 0.35);
+  }
+}

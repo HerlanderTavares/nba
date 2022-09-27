@@ -1,0 +1,58 @@
+@import '../../Sections//helper.scss';
+
+.stats {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1fr;
+  margin-bottom: 10rem;
+
+  @include query(portrait) {
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-auto-columns: 1fr;
+    row-gap: 1.5rem;
+  }
+
+  &__field {
+    @include flex-center(true);
+    width: 100%;
+    aspect-ratio: 1 / 0.5;
+    gap: 15%;
+
+    &:not(:last-child) {
+      border-right: solid 1px rgba(black, 0.2);
+    }
+
+    @include query(portrait) {
+      border-right: solid 1px rgba(black, 0.2);
+
+      &:nth-child(5n),
+      &:first-child {
+        border-left: solid 1px rgba(black, 0.2);
+      }
+    }
+  }
+
+  &__label {
+    font-size: 1.2rem;
+    font-weight: weight(bold);
+    font-family: font(heading);
+    color: color(main);
+    text-transform: uppercase;
+
+    @media (orientation: landscape) and (max-width: 53.125em) {
+      font-size: 100vw * 0.013;
+    }
+
+    @include query(500) {
+      font-size: 100vw * 0.021;
+    }
+  }
+
+  &__value {
+    @include query(500) {
+      font-size: 100vw * 0.04;
+    }
+  }
+}

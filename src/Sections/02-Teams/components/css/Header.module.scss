@@ -1,0 +1,68 @@
+@import '../../../helper.scss';
+
+.header {
+  width: 100%;
+  height: 15rem;
+  @include flex-center;
+  font-family: font(heading);
+
+  &__container {
+    @extend %container;
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    align-items: center;
+    gap: 2rem;
+
+    @include query(portrait) {
+      grid-template-columns: max-content 1fr;
+    }
+  }
+
+  .logo {
+    width: 12rem;
+
+    &.black-logo {
+      filter: drop-shadow(1px 1px 1px white) drop-shadow(-1px -1px 1px white)
+        drop-shadow(0 0 1px white);
+      -webkit-filter: drop-shadow(1px 1px 1px white) drop-shadow(-1px -1px 1px white)
+        drop-shadow(0 0 1px white);
+    }
+
+    @media (max-aspect-ratio: 1 / 2) {
+      width: 10rem;
+    }
+  }
+
+  &__title {
+    @include flex($dir: column);
+
+    @include query(portrait) {
+      justify-self: end;
+      text-align: right;
+    }
+  }
+
+  &__name {
+    text-transform: uppercase;
+    font-size: 2.8rem;
+
+    @media (max-aspect-ratio: 1 / 2) {
+      font-size: 2.3rem;
+    }
+  }
+
+  &__year,
+  &__standings {
+    font-size: 1.4rem;
+    font-weight: weight(bold);
+  }
+
+  &__info {
+    @include flex($ver: end, $dir: column);
+    line-height: 1.5;
+
+    @include query(portrait) {
+      display: none;
+    }
+  }
+}

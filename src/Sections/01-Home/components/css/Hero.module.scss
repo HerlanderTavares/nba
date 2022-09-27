@@ -1,0 +1,103 @@
+@import '../../../helper.scss';
+
+.hero {
+  @extend %section;
+  height: 100%;
+  width: 100%;
+  background-color: #ecf9ff;
+  box-shadow: inset 1.8rem 1.8rem 14rem rgba(black, 0.35),
+    inset -1.8rem -1.8rem 14rem rgba(black, 0.35);
+
+  &__container {
+    @extend %container;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    justify-items: center;
+    align-items: center;
+    height: 100%;
+
+    @include query(1000) {
+      grid-template-columns: 60% 1fr;
+    }
+
+    @include query(600) {
+      grid-template-columns: 60% 1fr;
+    }
+  }
+
+  &__content {
+    @include flex(center, start, column);
+    width: 100%;
+    gap: 1rem;
+
+    h1 {
+      color: lighten(color(main), 30%);
+      text-transform: uppercase;
+      font-family: font(heading);
+
+      @include query(600) {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+      }
+    }
+
+    p {
+      font-size: 2.2rem;
+      line-height: 1.7;
+      margin-bottom: 5rem;
+
+      @include query(650) {
+        font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      }
+    }
+
+    a {
+      background: linear-gradient(to right, color(main), #295ec2, color(main));
+      border-radius: 100vw;
+      padding: 1.5rem 3rem;
+      text-transform: uppercase;
+      font-family: font(heading);
+      font-weight: weight(medium);
+      display: inline-block;
+
+      &:link,
+      &:visited {
+        color: white;
+      }
+
+      &:active {
+        scale: 0.85;
+      }
+
+      @include query(600) {
+        font-size: clamp(1.2rem, 2vw, 2.5rem);
+      }
+    }
+  }
+
+  &__img {
+    height: 90%;
+    width: 100%;
+    min-height: 0;
+    align-self: end;
+    background-image: url('../../../../Images/lebron.webp');
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: 100% 100%;
+
+    @include query(1000) {
+      background-position: 0 100%;
+      translate: 40%;
+      width: 120%;
+    }
+
+    @include query(portrait) {
+      background-position: 0 100%;
+      translate: 15%;
+    }
+
+    @media (max-aspect-ratio: 47 / 100) {
+      translate: 10%;
+    }
+  }
+}

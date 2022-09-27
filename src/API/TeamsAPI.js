@@ -14,7 +14,7 @@ export async function teamAPI(state) {
   }
 }
 
-export async function teamInfoAPI(state, teamsArr) {
+export async function teamInfoAPI(teamsArr) {
   try {
     //Current Date
     const year = new Date().getFullYear();
@@ -28,40 +28,44 @@ export async function teamInfoAPI(state, teamsArr) {
       leagueMiniStandings: standingsLink,
       leagueTeamStatsLeaders,
     } = links;
-    const teams = teamsArr;
 
-    teams.forEach(async team => {
-      // Rosters
-      const rosterLink = teamRoster.replace('{{teamUrlCode}}', team.urlName);
-      const rosterAPI = await fetchAPI(rosterLink);
-      const roster = await rosterAPI.league.standard.players;
-      team.roster = await roster.map(player => player.personId);
+    const teams = await Promise.all(
+      teamsArr.map(async team => {
+        // Rosters
+        const rosterLink = teamRoster.replace('{{teamUrlCode}}', team.urlName);
+        const rosterAPI = await fetchAPI(rosterLink);
+        const rosterArr = await rosterAPI.league.standard.players;
+        const roster = await rosterArr.map(player => player.personId);
 
-      // Leaders
-      const leadersLink = teamLeaders2
-        .replace('{{teamId}}', team.teamId)
-        .replace(year, currentYear);
-      const leadersAPI = await fetchAPI(leadersLink);
-      const leaders = await leadersAPI.league.standard;
-      team.leaders = leaders;
+        // Leaders
+        const leadersLink = teamLeaders2
+          .replace('{{teamId}}', team.teamId)
+          .replace(year, currentYear);
+        const leadersAPI = await fetchAPI(leadersLink);
+        const leaders = await leadersAPI.league.standard;
 
-      // Standings
-      const standingsAPI = await fetchAPI(standingsLink);
-      const standings = await standingsAPI.league.standard.teams;
-      standings.forEach(standing => {
-        if (standing.teamId == team.teamId) team.standings = standing;
-      });
+        // Standings
+        const standingsAPI = await fetchAPI(standingsLink);
+        const standingsArr = await standingsAPI.league.standard.teams;
+        const standings = await standingsArr.filter(standing => standing.teamId == team.teamId)[0];
 
-      // Stats
-      const statsLink = leagueTeamStatsLeaders.replace(year, currentYear);
-      const statsAPI = await fetchAPI(statsLink);
-      const stats = await statsAPI.league.standard.regularSeason.teams;
-      stats.forEach(stat => {
-        if (stat.teamId == team.teamId) team.teamStats = stat;
-      });
-    });
+        // Stats
+        const statsLink = leagueTeamStatsLeaders.replace(year, currentYear);
+        const statsAPI = await fetchAPI(statsLink);
+        const statsArr = await statsAPI.league.standard.regularSeason.teams;
+        const stats = await statsArr.filter(stat => stat.teamId == team.teamId)[0];
 
-    state.setTeams(teams);
+        return {
+          id: team.teamId,
+          roster,
+          leaders,
+          standings,
+          stats,
+        };
+      })
+    );
+
+    return teams;
   } catch (e) {
     console.error(e.message);
   }
