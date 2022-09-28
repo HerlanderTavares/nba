@@ -20,13 +20,6 @@ export default function App() {
   const [screen, setScreen] = useState('teams');
   const [viewTeam, setViewTeam] = useState();
   const [currentYear, setCurrentYear] = useState('');
-  const [isLoading, setIsLoading] = useState({
-    teams: true,
-    players: true,
-    coaches: true,
-    teamsInfo: true,
-    playersInfo: true,
-  });
 
   const state = {
     teams,
@@ -34,8 +27,6 @@ export default function App() {
     players,
     playersInfo,
     coaches,
-    isLoading,
-    setIsLoading,
     error,
     setError,
     viewTeam,
@@ -51,12 +42,7 @@ export default function App() {
         return teamInfoAPI(data);
       })
       .then(data => {
-        setIsLoading(prevState => ({...prevState, teams: false}));
         setTeamsInfo(data);
-        return data;
-      })
-      .then(data => {
-        setIsLoading(prevState => ({...prevState, teamsInfo: false}));
         return data;
       });
 
@@ -66,21 +52,14 @@ export default function App() {
         return playerInfoAPI(data);
       })
       .then(data => {
-        setIsLoading(prevState => ({...prevState, players: false}));
         setPlayersInfo(data);
-        return data;
-      })
-      .then(data => {
-        setIsLoading(prevState => ({...prevState, playersInfo: false}));
         return data;
       });
 
-    coachesAPI(state)
-      .then(data => {
-        setCoaches(data);
-        return data;
-      })
-      .then(data => setIsLoading(prevState => ({...prevState, coaches: false})));
+    coachesAPI(state).then(data => {
+      setCoaches(data);
+      return data;
+    });
 
     seasonYear(setCurrentYear);
   }, []);

@@ -17,12 +17,12 @@ export default function Home(props) {
     <div className={css(styles, 'home')}>
       <div className={css(styles, 'home__hero')}>
         <Header />
-        {!state.isLoading.teams && <Hero />}
-        {state.isLoading.teams && <LoadingScreen className={css(styles, 'home__loading')} />}
+        {state.teams && <Hero />}
+        {!state.teams && <LoadingScreen className={css(styles, 'home__loading')} />}
       </div>
-      {!state.isLoading.teams && <Teams />}
-      {!state.isLoading.teams && <Players />}
-      {!state.isLoading.teams && <Footer />}
+      {state.teams && <Teams />}
+      {state.teams && <Players />}
+      {state.teams && <Footer />}
     </div>
   );
 }

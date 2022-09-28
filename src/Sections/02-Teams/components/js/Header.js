@@ -8,7 +8,7 @@ import State from '../../../../API/State';
 
 export default function Header(props) {
   const state = useContext(State);
-  const team = props.team;
+  const {team} = props;
 
   const {hex} = getMainColor(team.tricode);
   const hsl = hexToHsl(hex);
@@ -21,7 +21,7 @@ export default function Header(props) {
         <div className={css(styles, 'header__title')}>
           <h2 className={css(styles, 'header__name')}>{team.fullName}</h2>
           <span className={css(styles, 'header__standings')}>
-            {team.standings && `(${team.standings.win} - ${team.standings.loss})`}
+            {team.info && `(${team.info.standings.win} - ${team.info.standings.loss})`}
           </span>
         </div>
         <div className={css(styles, 'header__info')}>
