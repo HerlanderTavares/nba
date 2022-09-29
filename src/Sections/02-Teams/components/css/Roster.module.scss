@@ -1,0 +1,93 @@
+@import '../../../helper.scss';
+
+.roster {
+  @include flex-center(true);
+  gap: 3rem;
+}
+
+.coaches {
+  width: 100%;
+  max-width: 90rem;
+  @include flex(space-between);
+  height: 20rem;
+  background-color: color(main);
+  color: white;
+  border: solid 2rem darken(color(main), 10%);
+  margin: 0 auto;
+
+  @include query(900) {
+    height: auto;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 2rem;
+  }
+
+  @include query(600) {
+    flex-direction: column;
+    gap: 3.5rem;
+    h2 {
+      font-size: 4rem;
+    }
+  }
+
+  &__head {
+    @include flex($ver: center);
+
+    span {
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    img {
+      height: 100%;
+    }
+
+    @include query(900) {
+      flex-direction: column;
+      text-align: center;
+      gap: 0.5rem;
+      line-height: 0.9;
+
+      img {
+        height: 15rem;
+      }
+    }
+  }
+
+  &__staff {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: 3rem;
+    font-size: 1.6rem;
+    padding: 1.5rem;
+
+    @include query(900) {
+      grid-template-columns: max-content;
+      row-gap: 1rem;
+      padding: 0;
+    }
+
+    @include query(600) {
+      text-align: center;
+    }
+  }
+
+  &__label {
+    &[data-label='desktop'] {
+      @include query(900) {
+        display: none;
+      }
+    }
+
+    &[data-label='mobile'] {
+      text-decoration: underline;
+      text-underline-offset: 0.5rem;
+      display: none;
+
+      @include query(900) {
+        display: initial;
+      }
+    }
+  }
+}

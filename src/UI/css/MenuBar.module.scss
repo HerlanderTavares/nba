@@ -1,0 +1,31 @@
+@import '../../Sections/helper.scss';
+.menu-bar {
+  width: 100%;
+  height: 5rem;
+  background-color: lighten(black, 7%);
+  padding: 1rem 0;
+  border-bottom: solid 3px rgba(white, 0.6);
+
+  .container {
+    @extend %container;
+    @include flex(space-between, center);
+  }
+
+  button {
+    height: 100%;
+    color: white;
+    font-family: font(heading);
+    text-transform: uppercase;
+    @include flex-center;
+    gap: 1rem;
+
+    svg {
+      fill: white;
+      height: 1em;
+    }
+  }
+
+  img {
+    height: 100%;
+  }
+}

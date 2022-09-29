@@ -1,0 +1,57 @@
+@import '../../../helper.scss';
+
+.leaders {
+  max-width: 90rem;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 10rem;
+  gap: 4rem;
+
+  @include query(800) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include query(500) {
+    grid-template-columns: 1fr;
+  }
+
+  &__card {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    @include flex;
+    overflow: hidden;
+    border-bottom: solid 0.5rem color(main);
+    @include box-shadow(1.2, 1.2, 3, 0.25);
+
+    img {
+      height: 100%;
+      margin-left: -18%;
+    }
+  }
+
+  &__info {
+    @include flex-center(true);
+    align-items: end;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    padding-left: 0;
+  }
+
+  &__name {
+    font-size: 1.2rem;
+    font-weight: weight(bold);
+    font-family: font(heading);
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  &__stat {
+    font-weight: weight(bold);
+    font-family: font(heading);
+    text-transform: uppercase;
+    color: color(main);
+  }
+}
