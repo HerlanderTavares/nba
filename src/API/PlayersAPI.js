@@ -26,9 +26,15 @@ export async function playerInfoAPI(playersArr) {
           const statsLink = playerProfile.replace('{{personId}}', player.personId);
           const statsAPI = await fetchAPI(statsLink);
           const stats = await statsAPI.league.standard.stats;
-          const allSeasons = [stats.latest, ...stats.regularSeason.season];
-          const currentSeason = allSeasons.filter(season => season.seasonYear == currentYear)[0]
-            ?.total;
+          const allSeasons = [
+            stats.latest,
+            ...stats.regularSeason.season.map(season => ({
+              ...season.total,
+              seasonYear: season.seasonYear,
+            })),
+          ];
+
+          const currentSeason = allSeasons.filter(season => season.seasonYear == currentYear)[0];
 
           return {id: player.personId, stats: {...stats, allSeasons, currentSeason}};
         } catch (e) {

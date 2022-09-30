@@ -20,10 +20,15 @@ const Icon = () => (
 export default function MenuBar(props) {
   const state = useContext(State);
 
+  const returnHome = e => {
+    state.setViewTeam(undefined);
+    state.setViewPlayer(undefined);
+    state.setScreen('home');
+  };
   return (
     <div className={css(styles, 'menu-bar')} style={{backgroundColor: props.color || null}}>
       <div className={css(styles, 'container')}>
-        <button>
+        <button onClick={returnHome}>
           <Icon /> Back
         </button>
 

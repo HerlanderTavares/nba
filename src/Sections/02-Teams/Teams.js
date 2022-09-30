@@ -1,9 +1,7 @@
 import styles from './Teams.module.scss';
 import State from '../../API/State';
 import {css} from '../helpers';
-import {useContext, useState, useEffect} from 'react';
-import {getMainColor} from 'nba-color';
-import hexToHsl from 'hex-to-hsl';
+import {useContext, useRef, useEffect} from 'react';
 
 import LoadingScreen from '../../UI/js/LoadingScreen';
 import Header from './components/js/Header';
@@ -12,41 +10,29 @@ import MenuBar from '../../UI/js/MenuBar';
 
 export default function Teams(props) {
   const state = useContext(State);
-  const [team, setTeam] = useState(undefined);
-  const [teamColor, setTeamColor] = useState(null);
-
-  useEffect(() => {
-    if (team) {
-      const {hex} = getMainColor(team.tricode);
-      const hsl = hexToHsl(hex);
-      const color = `hsl(${hsl[0]}deg, ${hsl[1]}%, ${hsl[2] - 20}%)`;
-      setTeamColor(color);
-    }
-  }, [team]);
-
-  console.log(teamColor);
-
-  //Test data
-  useEffect(() => {
-    if (state.teams) {
-      const gsw = state.teams.filter(team => team.tricode === 'GSW')[0];
-      const bkn = state.teams.filter(team => team.tricode === 'BKN')[0];
-      const uta = state.teams.filter(team => team.tricode === 'UTA')[0];
-      setTeam(gsw);
-    }
-  }, [state.teams]);
+  const team = state.viewTeam;
 
   const teamInfo =
     team && state.teamsInfo ? state.teamsInfo.filter(info => info.id == team.teamId)[0] : undefined;
 
-  const isLoading = !state.teamsInfo || !state.playersInfo;
+  const isLoading = !team || !state.teamsInfo || !state.playersInfo;
   const loadingClass = isLoading ? 'loading' : '';
 
+  const page = useRef();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behaviour: 'instant',
+    });
+  }, []);
+
   return (
-    <div className={css(styles, 'teams', loadingClass)}>
+    <div className={css(styles, 'teams', loadingClass)} ref={page}>
       <div className={css(styles, 'teams__startup')}>
-        <MenuBar color={teamColor} />
         {team && <Header team={{...team, info: teamInfo}} />}
+        <MenuBar />
         {isLoading && <LoadingScreen style={{gridRow: 3}} />}
       </div>
       {!isLoading && <Main team={{...team, info: teamInfo}} />}

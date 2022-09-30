@@ -1,0 +1,13 @@
+@import '../../../helper.scss';
+
+.main {
+  &__container {
+    @extend %container;
+  }
+
+  &__subtitle {
+    @extend %subtitle;
+    text-align: center;
+    margin: 20rem 0 5rem;
+  }
+}

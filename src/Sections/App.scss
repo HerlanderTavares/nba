@@ -65,3 +65,7 @@ button {
   font-family: font(heading);
   font-size: 2rem;
 }
+
+.dark-logo {
+  filter: drop-shadow(1px, 1px, 0, white) !important;
+}

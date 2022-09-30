@@ -1,0 +1,217 @@
+@import '../../../helper.scss';
+
+.header {
+  @include flex($dir: column);
+
+  &__container {
+    @extend %container;
+  }
+}
+
+.header__main {
+  width: 100%;
+  min-height: 25rem;
+  height: 30vh;
+  overflow: hidden;
+
+  @include query(800) {
+    height: auto;
+  }
+
+  .header {
+    &__container {
+      @include flex(space-between, center);
+      position: relative;
+      z-index: 1;
+      padding-left: 5rem;
+
+      @include query(800) {
+        @include flex-center(true);
+        text-align: center;
+        padding: 0;
+        padding-top: 5rem;
+        gap: 2rem;
+        flex-direction: column-reverse;
+      }
+    }
+
+    &__img {
+      height: 90%;
+      align-self: end;
+
+      @include query(800) {
+        align-self: unset;
+        height: auto;
+        width: 100%;
+        max-width: 40rem;
+      }
+    }
+
+    &__logo {
+      position: absolute;
+      width: 12%;
+      max-width: 16rem;
+      min-width: 7rem;
+      top: 50%;
+      left: 0;
+      translate: 0 -50%;
+
+      @include query(800) {
+        translate: 0;
+      }
+    }
+
+    &__bkg-logo {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100rem;
+      translate: -25% -50%;
+      mix-blend-mode: luminosity;
+      opacity: 0.05;
+      z-index: -1;
+
+      @include query(600) {
+        width: 80rem;
+      }
+    }
+
+    &__info {
+      @include flex(center, start, column);
+      text-transform: uppercase;
+      font-family: font(heading);
+
+      @include query(800) {
+        @include flex-center(true);
+        text-align: center;
+        flex-direction: column-reverse;
+      }
+
+      h1 {
+        font-size: 5rem;
+        @include query(500) {
+          font-size: clamp(2rem, 10vw, 5rem);
+        }
+
+        &[data-sreen='large'] {
+          @include query(800) {
+            display: none;
+          }
+        }
+
+        &[data-sreen='small'] {
+          display: none;
+
+          @include query(800) {
+            display: initial;
+          }
+        }
+      }
+
+      span {
+        font-size: 1.5rem;
+        font-weight: weight(bolder);
+
+        @include query(350) {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}
+
+.header__profile {
+  width: 100%;
+  min-height: 15rem;
+  height: 20vh;
+  z-index: 2;
+  border: solid 1px white;
+  color: white;
+
+  @include query(950) {
+    height: auto;
+    min-height: unset;
+    aspect-ratio: 5 / 1;
+  }
+
+  @include query(830) {
+    aspect-ratio: unset;
+  }
+
+  .header__container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    @include query(830) {
+      grid-template-columns: 1fr;
+      grid-template-rows: max-content max-content;
+    }
+
+    @include query(500) {
+      grid-template-rows: max-content 1fr;
+    }
+  }
+
+  $border: solid 1px white;
+
+  .header__stats {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    &-card {
+      width: 100%;
+      height: 100%;
+      border: $border;
+      @include flex-center(true);
+      font-family: font(heading);
+      gap: 1rem;
+
+      span {
+        font-size: 3rem;
+      }
+
+      .label {
+        font-size: 2rem;
+      }
+
+      @include query(830) {
+        height: auto;
+        aspect-ratio: 2 / 1;
+        padding: 1.5rem;
+      }
+    }
+  }
+
+  .header__info {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    &-card {
+      width: 100%;
+      height: 100%;
+      border: $border;
+      @include flex-center(true);
+      font-family: font(heading);
+      gap: 1rem;
+      text-align: center;
+
+      span {
+        font-size: 1.5rem;
+      }
+
+      @include query(830) {
+        height: auto;
+        aspect-ratio: 3.5 / 1;
+        padding: 1rem;
+      }
+
+      @include query(500) {
+        aspect-ratio: unset;
+      }
+    }
+  }
+}

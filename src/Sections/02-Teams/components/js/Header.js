@@ -1,5 +1,5 @@
 import styles from '../css/Header.module.scss';
-import {css} from '../../../helpers';
+import {css, nbaColor} from '../../../helpers';
 import {getMainColor} from 'nba-color';
 import {getImg} from '../../../../API/API';
 import hexToHsl from 'hex-to-hsl';
@@ -10,12 +10,12 @@ export default function Header(props) {
   const state = useContext(State);
   const {team} = props;
 
-  const {hex} = getMainColor(team.tricode);
-  const hsl = hexToHsl(hex);
-  const textColor = hsl[2] < 30 ? 'white' : `hsl(${hsl[0]}deg, ${hsl[1]}%, ${hsl[2] - 30}%)`;
   const black = team.tricode === 'BKN' || team.tricode === 'UTA' ? 'black-logo' : '';
+  const mainColor = nbaColor(team.tricode).color;
+  const textColor = nbaColor(team.tricode, {text: true}).color;
+
   return (
-    <div className={css(styles, 'header')} style={{backgroundColor: hex, color: textColor}}>
+    <div className={css(styles, 'header')} style={{backgroundColor: mainColor, color: textColor}}>
       <div className={css(styles, 'header__container')}>
         {getImg(team.teamId, 'logo', css(styles, 'logo', black))}
         <div className={css(styles, 'header__title')}>

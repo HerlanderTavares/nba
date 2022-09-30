@@ -42,7 +42,10 @@ export default function Main(props) {
       rpg: [team.info.leaders.trpg[0].personId, team.info.leaders.trpg[0].value],
       spg: [team.info.leaders.spg[0].personId, team.info.leaders.spg[0].value],
       bpg: [team.info.leaders.bpg[0].personId, team.info.leaders.bpg[0].value],
-      fg: [team.info.leaders.fgp[0].personId, +team.info.leaders.fgp[0].value * 100 + '%'],
+      fg: [
+        team.info.leaders.fgp[0].personId,
+        (+team.info.leaders.fgp[0].value * 100).toFixed(1) + '%',
+      ],
     };
 
     return (

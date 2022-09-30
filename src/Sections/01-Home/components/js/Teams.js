@@ -5,7 +5,18 @@ import State from '../../../../API/State';
 import {getImg} from '../../../../API/API';
 
 const Button = props => {
-  return <button className={css(styles, 'teams__btn')}>{getImg(props.team.teamId, 'logo')}</button>;
+  const state = useContext(State);
+
+  const openTeam = e => {
+    state.setViewTeam(props.team);
+    state.setScreen('teams');
+  };
+
+  return (
+    <button className={css(styles, 'teams__btn')} onClick={openTeam}>
+      {getImg(props.team.teamId, 'logo')}
+    </button>
+  );
 };
 
 export default function Teams(props) {

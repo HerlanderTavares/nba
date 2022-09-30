@@ -17,20 +17,23 @@ export async function API() {
 export async function seasonYear(setDate = () => {}) {
   const links = await API();
   const scheduleAPI = await fetchAPI(links.leagueSchedule);
-  const {
-    league: {standard: schedule},
-  } = await scheduleAPI;
-  const gameDates = await schedule.map(game => new Date(game.startTimeUTC).valueOf());
+  // prettier-ignore
+  const {league: {standard: schedule}} = await scheduleAPI;
+  const gameDates = await schedule
+    .filter(game => game.seasonStageId == 2)
+    .map(game => new Date(game.startTimeUTC).valueOf());
   const firstGame = new Date(Math.min(...gameDates));
 
   const seasonYear =
-    firstGame <= new Date() ? firstGame.getFullYear() : firstGame.getFullYear() - 1;
+    new Date().valueOf() >= firstGame.valueOf()
+      ? firstGame.getFullYear()
+      : firstGame.getFullYear() - 1;
 
   setDate(seasonYear);
   return seasonYear;
 }
 
-export const getImg = (id, type = 'small', className = '') => {
+export const getImg = (id, type = 'small', className = '', value = 'image') => {
   const smallImg = `https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/${id}.png`;
   const largeImg = `https://cdn.nba.com/headshots/nba/latest/1040x760/${id}.png`;
   const logo = `https://cdn.nba.com/logos/nba/${id}/global/L/logo.svg`;
@@ -44,5 +47,14 @@ export const getImg = (id, type = 'small', className = '') => {
     } else return;
   };
 
-  return <img src={imgUrl} className={className} onError={onError} />;
+  const darkLogos = ['1610612763', '1610612751', '1610612762'];
+  const darkLogoStyle = {
+    filter:
+      'drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white) drop-shadow(0 0 1px white)',
+  };
+
+  const isDark = darkLogos.includes(id) ? darkLogoStyle : {};
+
+  if (value === 'link') return imgUrl;
+  else return <img src={imgUrl} className={className} onError={onError} style={isDark} />;
 };

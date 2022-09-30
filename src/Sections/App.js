@@ -16,10 +16,14 @@ export default function App() {
   const [players, setPlayers] = useState(undefined);
   const [playersInfo, setPlayersInfo] = useState(undefined);
   const [coaches, setCoaches] = useState(undefined);
+
   const [error, setError] = useState({failedLoad: false, message: ''});
-  const [screen, setScreen] = useState('teams');
-  const [viewTeam, setViewTeam] = useState();
   const [currentYear, setCurrentYear] = useState('');
+
+  const [viewTeam, setViewTeam] = useState();
+  const [viewPlayer, setViewPlayer] = useState();
+
+  const [screen, setScreen] = useState('home');
 
   const state = {
     teams,
@@ -31,8 +35,12 @@ export default function App() {
     setError,
     viewTeam,
     setViewTeam,
+    viewPlayer,
+    setViewPlayer,
     currentYear,
     setCurrentYear,
+    screen,
+    setScreen,
   };
 
   useEffect(() => {

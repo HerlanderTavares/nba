@@ -16,6 +16,7 @@ export default function Table(props) {
           break;
         case player[key] == false:
         case player[key] === undefined:
+        case +player[key] < 0:
           playerStats.push(<td key={key}>--</td>);
           break;
         case key === 'name':
