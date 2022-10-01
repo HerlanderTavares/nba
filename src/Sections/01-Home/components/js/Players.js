@@ -2,6 +2,8 @@ import styles from '../css/Players.module.scss';
 import {css} from '../../../helpers';
 import {useContext, useState, memo} from 'react';
 import State from '../../../../API/State';
+import LoadingScreen from '../../../../UI/js/LoadingScreen';
+import {goToPlayer} from '../../../helpers';
 
 const Icon = () => {
   return (
@@ -9,6 +11,17 @@ const Icon = () => {
       <title>Search</title>
       <path d="M456.69 421.39L362.6 327.3a173.81 173.81 0 0034.84-104.58C397.44 126.38 319.06 48 222.72 48S48 126.38 48 222.72s78.38 174.72 174.72 174.72A173.81 173.81 0 00327.3 362.6l94.09 94.09a25 25 0 0035.3-35.3zM97.92 222.72a124.8 124.8 0 11124.8 124.8 124.95 124.95 0 01-124.8-124.8z" />
     </svg>
+  );
+};
+
+const Button = props => {
+  const state = useContext(State);
+  const {player} = props;
+
+  return (
+    <button className={css(styles, 'search__btn')} onClick={() => goToPlayer(player, state)}>
+      #{player.jersey} {player.firstName} {player.lastName}
+    </button>
   );
 };
 
@@ -20,6 +33,8 @@ function Players(props) {
     setInput(e.target.value);
   };
 
+  const isLoading = !state.players;
+
   return (
     <div className={css(styles, 'players')} id="players">
       <div className={css(styles, 'players__container')}>
@@ -29,7 +44,9 @@ function Players(props) {
           <div className={css(styles, 'players__img')}>
             <img src={require('../../../../Images/players.webp')} alt="Two players in a game" />
           </div>
+
           <div className={css(styles, 'search')}>
+            {isLoading && <LoadingScreen className={css(styles, 'loading')} />}
             <div className={css(styles, 'search__field')}>
               <Icon />
               <input type="text" className={css(styles, 'search__input')} onChange={search} />
@@ -43,7 +60,19 @@ function Players(props) {
               </div>
             )}
 
-            {input != false && <div className={css(styles, 'search__results')}></div>}
+            {input != false && !isLoading && (
+              <div className={css(styles, 'search__results')}>
+                {state.players
+                  .filter(player =>
+                    `${player.firstName} ${player.lastName}`
+                      .toLowerCase()
+                      .includes(input.toLowerCase())
+                  )
+                  .map(player => (
+                    <Button key={player.personId} player={player} />
+                  ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

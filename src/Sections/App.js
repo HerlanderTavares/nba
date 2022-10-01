@@ -17,6 +17,7 @@ export default function App() {
   const [playersInfo, setPlayersInfo] = useState(undefined);
   const [coaches, setCoaches] = useState(undefined);
 
+  const [prompt, setPrompt] = useState(true);
   const [error, setError] = useState({failedLoad: false, message: ''});
   const [currentYear, setCurrentYear] = useState('');
 
@@ -41,6 +42,8 @@ export default function App() {
     setCurrentYear,
     screen,
     setScreen,
+    prompt,
+    setPrompt,
   };
 
   useEffect(() => {

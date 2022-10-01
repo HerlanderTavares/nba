@@ -65,3 +65,33 @@ export const nbaColor = (tricode, options = {}) => {
     color: `hsl(${colorObj.hue}deg, ${colorObj.saturation}%, ${colorObj.lightness}%)`,
   };
 };
+
+export const goToPlayer = (player, state) => {
+  switch (true) {
+    case player.firstName == false:
+    case player.lastName == false:
+    case player.heightFeet == false:
+    case player.isActive == false:
+    case player.jersey == false && player.jersey != '0' && player.jersey != '00':
+    case player.teamId == false:
+    case player.weightPounds == false:
+    case player.pos == false:
+      return;
+    default:
+      state.setViewPlayer(player);
+      state.setScreen('players');
+      break;
+  }
+};
+
+export const goToTeam = (team, state) => {
+  state.setViewTeam(team);
+  state.setScreen('teams');
+};
+
+export const scrollTo = e => {
+  e.preventDefault();
+  const href = e.target.href.slice(e.target.href.indexOf('#'));
+  const section = document.querySelector(href);
+  section.scrollIntoView({behavior: 'smooth'});
+};

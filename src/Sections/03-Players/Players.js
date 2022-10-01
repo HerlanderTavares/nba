@@ -9,32 +9,16 @@ import LoadingScreen from '../../UI/js/LoadingScreen';
 
 export default function Players(props) {
   const state = useContext(State);
-  const [player, setPlayer] = useState();
-
-  const filterPlayer = name =>
-    state.players.filter(
-      player => `${player.firstName} ${player.lastName}`.toLowerCase() === name.toLowerCase()
-    )[0];
+  const player = state.viewPlayer;
+  const hasLoaded = player && state.teams && state.playersInfo;
 
   useEffect(() => {
-    if (state.players) {
-      const steph = filterPlayer('stephen curry');
-      const lebron = filterPlayer('lebron james');
-      const lavine = filterPlayer('Zach LaVine');
-      const tatum = filterPlayer('Jayson Tatum');
-
-      const mitchell = filterPlayer('Walker Kessler');
-      const durant = filterPlayer('kevin durant');
-      const ja = filterPlayer('Ja Morant');
-      const dame = filterPlayer('damian lillard');
-      const book = filterPlayer('devin booker');
-      const butler = filterPlayer('Jimmy Butler');
-
-      setPlayer(book);
-    }
-  }, [state.players]);
-
-  const hasLoaded = player && state.teams && state.playersInfo;
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behaviour: 'auto',
+    });
+  }, []);
 
   return (
     <div className={css(styles, 'players')}>

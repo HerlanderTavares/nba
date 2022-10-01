@@ -24,7 +24,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 35%;
-    grid-template-rows: 1fr;
+    grid-template-rows: 100%;
     $space: 2rem;
     gap: $space;
     padding: $space;
@@ -64,9 +64,20 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: max-content 1fr;
+    position: relative;
 
     @include query(portrait) {
       width: 80%;
+    }
+
+    .loading {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: white;
+      z-index: 2;
     }
 
     &__field {
@@ -124,8 +135,38 @@
     &__results {
       width: 100%;
       height: 100%;
-      background-color: green;
       overflow-y: scroll;
+      min-height: 0;
+      min-width: 0;
+    }
+
+    &__btn {
+      font-size: 1.2rem;
+      font-weight: weight(bold);
+      text-transform: uppercase;
+      font-family: font(heading);
+      border-bottom: solid 1px rgba(black, 0.2);
+      padding: 2rem;
+      text-align: left;
+      width: 100%;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(black, 0.1);
+        top: 0;
+        left: 0;
+        scale: 0 1;
+        transition: scale 400ms ease;
+        transform-origin: 0 0;
+      }
+
+      &:hover::before {
+        scale: 1 1;
+      }
     }
   }
 }

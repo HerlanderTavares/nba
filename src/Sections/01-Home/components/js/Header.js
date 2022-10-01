@@ -1,5 +1,6 @@
 import styles from '../css/Header.module.scss';
 import {css} from '../../../helpers';
+import {scrollTo} from '../../../helpers';
 
 export default function Header(props) {
   return (
@@ -11,10 +12,10 @@ export default function Header(props) {
           className={css(styles, 'header__logo')}
         />
         <div className={css(styles, 'header__nav')}>
-          <a href="#teams" className={css(styles, 'header__link')}>
+          <a href="#teams" className={css(styles, 'header__link')} onClick={scrollTo}>
             Teams
           </a>
-          <a href="#teams" className={css(styles, 'header__link')}>
+          <a href="#players" className={css(styles, 'header__link')} onClick={scrollTo}>
             Players
           </a>
         </div>

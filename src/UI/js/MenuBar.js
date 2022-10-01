@@ -32,7 +32,7 @@ export default function MenuBar(props) {
           <Icon /> Back
         </button>
 
-        <button>
+        <button onClick={returnHome}>
           <img src={require('../../Images/logo.png')} alt="" />
         </button>
       </div>

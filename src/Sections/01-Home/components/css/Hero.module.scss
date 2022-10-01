@@ -7,6 +7,7 @@
   background-color: #ecf9ff;
   box-shadow: inset 1.8rem 1.8rem 14rem rgba(black, 0.35),
     inset -1.8rem -1.8rem 14rem rgba(black, 0.35);
+  position: relative;
 
   &__container {
     @extend %container;

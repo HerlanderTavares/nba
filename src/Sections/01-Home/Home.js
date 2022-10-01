@@ -20,9 +20,9 @@ export default function Home(props) {
         {state.teams && <Hero />}
         {!state.teams && <LoadingScreen className={css(styles, 'home__loading')} />}
       </div>
-      {state.teams && <Teams />}
-      {state.teams && <Players />}
-      {state.teams && <Footer />}
+      {state.teams && !state.prompt && <Teams />}
+      {state.teams && !state.prompt && <Players />}
+      {state.teams && !state.prompt && <Footer />}
     </div>
   );
 }

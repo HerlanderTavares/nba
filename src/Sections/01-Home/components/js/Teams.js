@@ -3,17 +3,13 @@ import {css} from '../../../helpers';
 import {useContext} from 'react';
 import State from '../../../../API/State';
 import {getImg} from '../../../../API/API';
+import {goToTeam} from '../../../helpers';
 
 const Button = props => {
   const state = useContext(State);
 
-  const openTeam = e => {
-    state.setViewTeam(props.team);
-    state.setScreen('teams');
-  };
-
   return (
-    <button className={css(styles, 'teams__btn')} onClick={openTeam}>
+    <button className={css(styles, 'teams__btn')} onClick={() => goToTeam(props.team, state)}>
       {getImg(props.team.teamId, 'logo')}
     </button>
   );

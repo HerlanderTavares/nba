@@ -2,12 +2,12 @@ import styles from '../css/Header.module.scss';
 import {calcAge, css, isImage, nbaColor} from '../../../helpers';
 import {useContext} from 'react';
 import State from '../../../../API/State';
-import hexToHsl from 'hex-to-hsl';
-import {getMainColor} from 'nba-color';
 import {getImg} from '../../../../API/API';
 import MenuBar from '../../../../UI/js/MenuBar';
 
 const MainHeader = props => {
+  const state = useContext(State);
+
   const {player} = props;
   const {team} = props.player;
 
@@ -18,12 +18,20 @@ const MainHeader = props => {
     C: 'Center',
   };
 
+  const goToTeam = () => {
+    state.setViewTeam(team);
+    state.setScreen('teams');
+  };
+
   return (
     <div className={css(styles, 'header__main')} style={inline}>
       <div className={css(styles, 'header__container')}>
         {getImg(player.personId, 'large', css(styles, 'header__img'))}
         {getImg(team.teamId, 'logo', css(styles, 'header__bkg-logo'))}
-        {getImg(team.teamId, 'logo', css(styles, 'header__logo'))}
+
+        <button className={css(styles, 'header__logo')} onClick={goToTeam}>
+          {getImg(team.teamId, 'logo')}
+        </button>
 
         <div className={css(styles, 'header__info')}>
           <span>

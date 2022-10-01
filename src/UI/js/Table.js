@@ -1,8 +1,16 @@
 import styles from '../css/Table.module.scss';
 import {css} from '../../Sections/helpers';
+import {useContext} from 'react';
+import State from '../../API/State';
+import {goToPlayer} from '../../Sections/helpers';
 
 export default function Table(props) {
-  const goToPlayer = () => {};
+  const state = useContext(State);
+
+  const openPlayer = player => {
+    const viewPlayer = state.players.filter(p => `${p.firstName} ${p.lastName}` === player.name)[0];
+    goToPlayer(viewPlayer, state);
+  };
 
   const keys = props.data.keys.map(key => <th key={key}>{key}</th>);
   const data = props.data.data.map(player => {
@@ -20,7 +28,7 @@ export default function Table(props) {
           playerStats.push(<td key={key}>--</td>);
           break;
         case key === 'name':
-          const button = <button onClick={goToPlayer}>{player[key]}</button>;
+          const button = <button onClick={() => openPlayer(player)}>{player[key]}</button>;
           playerStats.push(<td key={key}>{button}</td>);
           break;
         case key === 'number':

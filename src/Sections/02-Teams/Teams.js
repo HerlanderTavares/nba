@@ -24,7 +24,7 @@ export default function Teams(props) {
     window.scrollTo({
       top: 0,
       left: 0,
-      behaviour: 'instant',
+      behaviour: 'auto',
     });
   }, []);
 

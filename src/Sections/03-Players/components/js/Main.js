@@ -12,8 +12,6 @@ export default function Main(props) {
   const team = state.teams.filter(team => team.teamId === player.teamId)[0];
   const info = state.playersInfo.filter(info => info.id === player.personId)[0].stats;
 
-  console.log(info);
-
   const careerTotals = {
     points: info?.careerSummary?.points || '--',
     assists: info?.careerSummary?.assists || '--',
@@ -60,7 +58,6 @@ export default function Main(props) {
       plusMinus: season.plusMinus,
     }));
 
-  console.log(keys);
   return (
     <div className={css(styles, 'main')}>
       <div className={css(styles, 'main__container')}>

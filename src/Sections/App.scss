@@ -8,7 +8,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  scroll-behavior: smooth;
   scroll-margin-top: 10rem;
 }
 
@@ -68,4 +67,8 @@ button {
 
 .dark-logo {
   filter: drop-shadow(1px, 1px, 0, white) !important;
+}
+
+.smooth-scroll {
+  scroll-behavior: smooth;
 }
