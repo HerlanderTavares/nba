@@ -61,7 +61,10 @@ function Players(props) {
             )}
 
             {input != false && !isLoading && (
-              <div className={css(styles, 'search__results')}>
+              <div
+                className={css(styles, 'search__results')}
+                style={{WebkitOverflowScrolling: 'touch'}}
+              >
                 {state.players
                   .filter(player =>
                     `${player.firstName} ${player.lastName}`

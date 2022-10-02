@@ -2,7 +2,7 @@
      FETCH API
 ****************************************/
 export async function fetchAPI(apiLink) {
-  const link = 'http://data.nba.net/10s';
+  const link = 'https://data.nba.net/10s';
   const api = await fetch(link + apiLink);
   const response = await api.json();
   const data = await response;
