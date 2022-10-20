@@ -44,7 +44,7 @@ export default function Roster(props) {
   // prettier-ignore
   const keys = ['NO°', 'NAME', 'POS', 'AGE', 'H (m)', 'W (kg)', 'PPG', 'APG', 'RPG', 'SPG', 'BPG', 'FG%', 'FT%', '3PT%']
   const displayAge = date => (date == false ? '' : `${calcAge(date).age} (${calcAge(date).year})`);
-  const displayPercentage = num => (num == false || num == undefined ? '' : `${num}%`);
+  const displayPercentage = num => (num == false || num == undefined || num < 0 ? '' : `${num}%`);
 
   const rosterData = {
     keys,

@@ -4,14 +4,18 @@ import {useContext} from 'react';
 import State from '../../../../API/State';
 import {getImg} from '../../../../API/API';
 import {goToTeam} from '../../../helpers';
+import {Link} from 'react-router-dom';
 
 const Button = props => {
   const state = useContext(State);
-
   return (
-    <button className={css(styles, 'teams__btn')} onClick={() => goToTeam(props.team, state)}>
+    <Link
+      className={css(styles, 'teams__btn')}
+      onClick={() => goToTeam(props.team, state)}
+      to={'/team'}
+    >
       {getImg(props.team.teamId, 'logo')}
-    </button>
+    </Link>
   );
 };
 

@@ -1,9 +1,10 @@
 import styles from '../css/Header.module.scss';
-import {calcAge, css, isImage, nbaColor} from '../../../helpers';
+import {calcAge, checkStat, css, isImage, nbaColor} from '../../../helpers';
 import {useContext} from 'react';
 import State from '../../../../API/State';
 import {getImg} from '../../../../API/API';
 import MenuBar from '../../../../UI/js/MenuBar';
+import {Link} from 'react-router-dom';
 
 const MainHeader = props => {
   const state = useContext(State);
@@ -18,20 +19,19 @@ const MainHeader = props => {
     C: 'Center',
   };
 
-  const goToTeam = () => {
-    state.setViewTeam(team);
-    state.setScreen('teams');
-  };
-
   return (
     <div className={css(styles, 'header__main')} style={inline}>
       <div className={css(styles, 'header__container')}>
         {getImg(player.personId, 'large', css(styles, 'header__img'))}
         {getImg(team.teamId, 'logo', css(styles, 'header__bkg-logo'))}
 
-        <button className={css(styles, 'header__logo')} onClick={goToTeam}>
+        <Link
+          className={css(styles, 'header__logo')}
+          onClick={() => state.setViewTeam(team)}
+          to={'/team'}
+        >
           {getImg(team.teamId, 'logo')}
-        </button>
+        </Link>
 
         <div className={css(styles, 'header__info')}>
           <span>
@@ -54,9 +54,9 @@ const ProfileHeader = props => {
   const inline = {backgroundColor: props.color, color: props.text};
 
   const info = {
-    ppg: player.info?.currentSeason?.ppg || '--',
-    apg: player.info?.currentSeason?.apg || '--',
-    rpg: player.info?.currentSeason?.rpg || '--',
+    ppg: checkStat(+player.info?.currentSeason?.ppg),
+    apg: checkStat(+player.info?.currentSeason?.apg),
+    rpg: checkStat(+player.info?.currentSeason?.rpg),
     country: player.country || '--',
     experience: player.yearsPro || '--',
     // prettier-ignore

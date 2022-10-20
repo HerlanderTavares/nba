@@ -2,6 +2,7 @@ import styles from '../css/MenuBar.module.scss';
 import {css} from '../../Sections/helpers';
 import {useContext} from 'react';
 import State from '../../API/State';
+import {useNavigate} from 'react-router-dom';
 
 const Icon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -19,11 +20,12 @@ const Icon = () => (
 
 export default function MenuBar(props) {
   const state = useContext(State);
+  const navigate = useNavigate();
 
   const returnHome = e => {
     state.setViewTeam(undefined);
     state.setViewPlayer(undefined);
-    state.setScreen('home');
+    navigate(-1);
   };
   return (
     <div className={css(styles, 'menu-bar')} style={{backgroundColor: props.color || null}}>

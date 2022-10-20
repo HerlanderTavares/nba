@@ -2,6 +2,7 @@ import styles from './Teams.module.scss';
 import State from '../../API/State';
 import {css} from '../helpers';
 import {useContext, useRef, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import LoadingScreen from '../../UI/js/LoadingScreen';
 import Header from './components/js/Header';
@@ -11,6 +12,7 @@ import MenuBar from '../../UI/js/MenuBar';
 export default function Teams(props) {
   const state = useContext(State);
   const team = state.viewTeam;
+  const navigate = useNavigate();
 
   const teamInfo =
     team && state.teamsInfo ? state.teamsInfo.filter(info => info.id == team.teamId)[0] : undefined;
@@ -26,6 +28,8 @@ export default function Teams(props) {
       left: 0,
       behaviour: 'auto',
     });
+
+    if (!team) navigate('/home');
   }, []);
 
   return (

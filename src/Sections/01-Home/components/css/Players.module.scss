@@ -32,7 +32,7 @@
 
     @include box-shadow(1.5, 1.5, 4, 0.15);
 
-    @include query(portrait) {
+    @include query(800) {
       aspect-ratio: 1 / 1.2;
       grid-template-columns: 1fr;
       grid-template-rows: 40% calc(60% - 3rem);
@@ -51,7 +51,7 @@
       height: 100%;
       animation: pan 60s linear infinite alternate;
 
-      @include query(portrait) {
+      @include query(800) {
         height: auto;
         width: 100%;
       }
@@ -67,7 +67,7 @@
     position: relative;
     // overflow-y: scroll;
 
-    @include query(portrait) {
+    @include query(800) {
       width: 80%;
     }
 
@@ -152,6 +152,7 @@
       text-align: left;
       width: 100%;
       position: relative;
+      display: block;
 
       &::before {
         content: '';

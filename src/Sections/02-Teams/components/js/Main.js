@@ -16,16 +16,24 @@ export default function Main(props) {
 
   if (team && players) {
     /************** Stats **************/
+    const FG = isNaN(+team.info.stats.fgp.avg) ? '-' : +team.info.stats.fgp.avg * 100 + '%';
+    const RPG =
+      isNaN(+team.info.stats.orpg.avg) || isNaN(+team.info.stats.drpg.avg)
+        ? '-'
+        : (+team.info.stats.orpg.avg + +team.info.stats.drpg.avg).toFixed(1);
+
     const stats = {
       Standings: team.info.standings.confRank,
       Conference: team.confName,
       PPG: team.info.stats.ppg.avg,
       APG: team.info.stats.apg.avg,
-      RPG: (+team.info.stats.orpg.avg + +team.info.stats.drpg.avg).toFixed(1),
+      RPG,
       SPG: team.info.stats.spg.avg,
       BPG: team.info.stats.bpg.avg,
-      FG: +team.info.stats.fgp.avg * 100 + '%',
+      FG,
     };
+
+    console.log(stats);
 
     /************** Roster **************/
     const rosterArr = state.players.filter(player => team.info.roster.includes(player.personId));
@@ -36,16 +44,16 @@ export default function Main(props) {
     const teamCoaches = coaches.filter(coach => coach.teamId === team.teamId);
 
     /************** Leaders **************/
+    const fgValue = isNaN(+team.info.leaders.fgp[0]?.value)
+      ? undefined
+      : (+team.info.leaders.fgp[0]?.value * 100).toFixed(1) + '%';
     const leaders = {
-      ppg: [team.info.leaders.ppg[0].personId, team.info.leaders.ppg[0].value],
-      apg: [team.info.leaders.apg[0].personId, team.info.leaders.apg[0].value],
-      rpg: [team.info.leaders.trpg[0].personId, team.info.leaders.trpg[0].value],
-      spg: [team.info.leaders.spg[0].personId, team.info.leaders.spg[0].value],
-      bpg: [team.info.leaders.bpg[0].personId, team.info.leaders.bpg[0].value],
-      fg: [
-        team.info.leaders.fgp[0].personId,
-        (+team.info.leaders.fgp[0].value * 100).toFixed(1) + '%',
-      ],
+      ppg: [team.info.leaders?.ppg[0]?.personId, team.info.leaders?.ppg[0]?.value],
+      apg: [team.info.leaders?.apg[0]?.personId, team.info.leaders?.apg[0]?.value],
+      rpg: [team.info.leaders?.trpg[0]?.personId, team.info.leaders?.trpg[0]?.value],
+      spg: [team.info.leaders?.spg[0]?.personId, team.info.leaders?.spg[0]?.value],
+      bpg: [team.info.leaders?.bpg[0]?.personId, team.info.leaders?.bpg[0]?.value],
+      fg: [team.info.leaders.fgp[0]?.personId, fgValue],
     };
 
     return (
@@ -55,7 +63,7 @@ export default function Main(props) {
           <Stats stats={stats} />
           <h2 className={css(styles, 'main__subtitle')}>Roster</h2>
           <Roster roster={roster} coaches={teamCoaches} />
-          <h2 className={css(styles, 'main__subtitle')}>Team Leaders</h2>
+
           <Leaders leaders={leaders} />
         </div>
         <Footer />

@@ -6,6 +6,8 @@ import {coachesAPI} from '../API/CoachesAPI';
 import {useState, useEffect} from 'react';
 import State from '../API/State';
 
+import {Routes, Route, Navigate} from 'react-router-dom';
+
 import Home from './01-Home/Home';
 import Teams from './02-Teams/Teams';
 import Players from './03-Players/Players';
@@ -77,9 +79,12 @@ export default function App() {
 
   return (
     <State.Provider value={state}>
-      {screen === 'home' && <Home />}
-      {screen === 'teams' && <Teams />}
-      {screen === 'players' && <Players />}
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/home" />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/team" element={<Teams />} />
+        <Route path="/player" element={<Players />} />
+      </Routes>
     </State.Provider>
   );
 }

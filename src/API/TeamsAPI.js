@@ -17,7 +17,7 @@ export async function teamAPI(state) {
 export async function teamInfoAPI(teamsArr) {
   try {
     //Current Date
-    const year = new Date().getFullYear();
+    const year = `${new Date().getFullYear()}`;
     const currentYear = await seasonYear();
 
     // Links
@@ -43,7 +43,6 @@ export async function teamInfoAPI(teamsArr) {
           .replace(year, currentYear);
         const leadersAPI = await fetchAPI(leadersLink);
         const leaders = await leadersAPI.league.standard;
-
         // Standings
         const standingsAPI = await fetchAPI(standingsLink);
         const standingsArr = await standingsAPI.league.standard.teams;

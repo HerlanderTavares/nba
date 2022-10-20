@@ -66,7 +66,7 @@ export const nbaColor = (tricode, options = {}) => {
   };
 };
 
-export const goToPlayer = (player, state) => {
+export const playerProfileExists = player => {
   switch (true) {
     case player.firstName == false:
     case player.lastName == false:
@@ -76,17 +76,14 @@ export const goToPlayer = (player, state) => {
     case player.teamId == false:
     case player.weightPounds == false:
     case player.pos == false:
-      return;
+      return false;
     default:
-      state.setViewPlayer(player);
-      state.setScreen('players');
-      break;
+      return true;
   }
 };
 
 export const goToTeam = (team, state) => {
   state.setViewTeam(team);
-  state.setScreen('teams');
 };
 
 export const scrollTo = e => {
@@ -94,4 +91,16 @@ export const scrollTo = e => {
   const href = e.target.href.slice(e.target.href.indexOf('#'));
   const section = document.querySelector(href);
   section.scrollIntoView({behavior: 'smooth'});
+};
+
+export const checkStat = (stat, symbol) => {
+  switch (true) {
+    case stat == false:
+    case isNaN(stat):
+    case stat < 0:
+      return '--';
+    default:
+      if (symbol) return stat + symbol;
+      else return stat;
+  }
 };

@@ -3,7 +3,8 @@ import {css} from '../../../helpers';
 import {useContext, useState, memo} from 'react';
 import State from '../../../../API/State';
 import LoadingScreen from '../../../../UI/js/LoadingScreen';
-import {goToPlayer} from '../../../helpers';
+import {playerProfileExists} from '../../../helpers';
+import {Link} from 'react-router-dom';
 
 const Icon = () => {
   return (
@@ -17,12 +18,25 @@ const Icon = () => {
 const Button = props => {
   const state = useContext(State);
   const {player} = props;
+  const playerExists = playerProfileExists(player);
 
-  return (
-    <button className={css(styles, 'search__btn')} onClick={() => goToPlayer(player, state)}>
-      #{player.jersey} {player.firstName} {player.lastName}
-    </button>
-  );
+  if (playerExists) {
+    return (
+      <Link
+        className={css(styles, 'search__btn')}
+        onClick={() => state.setViewPlayer(player)}
+        to={'/player'}
+      >
+        #{player.jersey} {player.firstName} {player.lastName}
+      </Link>
+    );
+  } else {
+    return (
+      <Link className={css(styles, 'search__btn')}>
+        #{player.jersey} {player.firstName} {player.lastName}
+      </Link>
+    );
+  }
 };
 
 function Players(props) {
